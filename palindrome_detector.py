@@ -30,11 +30,13 @@ if __name__ == "__main__":
         for _set in data:
             string.append(f"{_set['number']}: {_set['is_palindrome']}")
             if _set["is_palindrome"]:
-                palindromes.append(_set["number"])
+                palindromes.append(str(_set["number"]))
             else:
-                non_palindromes.append(_set["number"])
+                non_palindromes.append(str(_set["number"]))
         print("\n".join(string))
         print(f"In the range of 1 to {args.test}, {len(palindromes)} palindrome(s) were found, and {len(non_palindromes)} non-palindrome(s) were found")
+        print(f"The palindromes were {', '.join(palindromes)}")
+        print(f"The non-palindromes were {', '.join(non_palindromes)}")
     else:
         print("Please enter a number to check whether it is a palindrome:", end=" ")
         number = input()
