@@ -1,4 +1,6 @@
 import argparse
+import datetime
+import humanfriendly
 
 
 def is_palindrome(number):
@@ -11,32 +13,22 @@ def is_palindrome(number):
 
 
 def test(test_range):
-    data = []
     for number in range(1, test_range + 1):
-        data.append({
-            "number": number,
-            "is_palindrome": is_palindrome(number)
-        })
-    return data
+        if is_palindrome(number):
+            yield number
 
 
 if __name__ == "__main__":
+    start_time = datetime.datetime.now()
     parser = argparse.ArgumentParser(description="Tests if a number is a palindrome")
     parser.add_argument("--test", help="Triggers a test of 1 to N numbers")
     args = parser.parse_args()
     if args.test:
-        data = test(int(args.test))
-        string, palindromes, non_palindromes = [], [], []
-        for _set in data:
-            string.append(f"{_set['number']}: {_set['is_palindrome']}")
-            if _set["is_palindrome"]:
-                palindromes.append(str(_set["number"]))
-            else:
-                non_palindromes.append(str(_set["number"]))
-        print("\n".join(string))
-        print(f"In the range of 1 to {args.test}, {len(palindromes)} palindrome(s) were found, and {len(non_palindromes)} non-palindrome(s) were found")
+        palindromes = []
+        for number in test(int(args.test)):
+            palindromes.append(str(number))
         print(f"The palindromes were {', '.join(palindromes)}")
-        print(f"The non-palindromes were {', '.join(non_palindromes)}")
+        print(f"Calculation took {humanfriendly.format_timespan(datetime.datetime.now() - start_time)}")
     else:
         print("Please enter a number to check whether it is a palindrome:", end=" ")
         number = input()
