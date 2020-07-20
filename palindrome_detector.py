@@ -24,10 +24,9 @@ if __name__ == "__main__":
     parser.add_argument("--test", help="Triggers a test of 1 to N numbers")
     args = parser.parse_args()
     if args.test:
-        palindromes = []
-        for number in test(int(args.test)):
-            palindromes.append(str(number))
-        print(f"The palindromes were {', '.join(palindromes)}")
+        palindromes = [str(number) for number in test(int(args.test))]
+        print(f"The palindromes from 1 to {args.test} were {', '.join(palindromes)}")
+        print(f"There were a total of {len(palindromes)}")
         print(f"Calculation took {humanfriendly.format_timespan(datetime.datetime.now() - start_time)}")
     else:
         print("Please enter a number to check whether it is a palindrome:", end=" ")
